@@ -1,9 +1,9 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box     = 'PythonDevBootstrapPrecise'
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.box     = 'ubuntu/trusty64'
 
+  config.vm.host_name = 'vagrant.local.com'
   #network
   config.vm.network :private_network, ip: "192.168.33.10"
   #config.vm.network :forwarded_port, guest: 8000, host: 8000
@@ -23,7 +23,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.manifest_file  = "init.pp"
-    puppet.options = "--verbose --debug"
-    puppet.options = "--verbose --noop"
+    #puppet.options = "--verbose --debug"    
   end
 end
