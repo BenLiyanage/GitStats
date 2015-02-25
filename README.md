@@ -24,7 +24,6 @@ This is a full stack solution.  Technologies I have used in this project are:
 
 * Pull down this repository.  
 * Run the vagrant file.  This will assemble an appropriate box for you.
-* Create a mysql database named 'github' - create database github;
 * mkdir /projects/populargithub/logfile
 * pip install requirements.txt
 * python manage.py makemigrations
@@ -49,9 +48,7 @@ At the moment this application requires mysql--there are some mysql specific que
 * Add Pagination Processing for the pull requests.  Currently it only imports the last 30 pull requests that have been closed.
 * Parse out Month/Date from pull_request dates on cache so that the application can be database agnostic.
 * Automate Database setup
-* Log logging to database for Repo Processing to allow for rendering statistical success rates.
+* Log crawling to database for Repo Processing to allow for rendering statistical success rates.
 * Mobile testing.
 * Throw in a D3.js example.
-* Add heroku toolbelt to vagrant file
-* add heroku pluggin: https://github.com/ddollar/heroku-push
 * set up web test runner for python: http://tungwaiyip.info/software/HTMLTestRunner.html

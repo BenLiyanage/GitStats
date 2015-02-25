@@ -4,10 +4,6 @@
 .DS_Store
 *.pyc
 build
-wikimedia
-projects/populargithub/populargithub/passwords.py
 *.log
 *.log
-projects/populargithub/logfile
-projects/populargithub/github/migrations
-projects/populargithub/staticfiles/QUOTAGUARD-LICENSE.txt
+migrations

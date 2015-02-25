@@ -66,7 +66,7 @@ WSGI_APPLICATION = 'populargithub.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'github',
+        'NAME': 'gitstats',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
         'PASSWORD': '',

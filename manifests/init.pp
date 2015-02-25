@@ -7,9 +7,16 @@ class core {
     }
   
     package { 
-      [ "vim", "git-core", "build-essential" ]:
+      [ "wget", "curl", "vim", "git-core", "build-essential" ]:
         ensure => ["installed"],
         require => Exec['apt-update']    
+    }
+	
+	exec {
+        "heroku-toolbelt":
+        command => "wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh",
+        creates => "/usr/local/heroku",
+        require =>Package["wget"],  
     }
 }
 
@@ -19,55 +26,6 @@ class python {
       [ "python", "python-setuptools", "python-dev", "python-pip", ]:
         ensure => ["installed"],
         require => Exec['apt-update']    
-    }
-
-    exec {
-      "virtualenv":
-      command => "/usr/bin/sudo pip install virtualenv",
-      require => Package["python-dev", "python-pip"]
-    }
-
-}
-
-class networking {
-    package { 
-      [ "snmp", "tkmib", "curl", "wget" ]:
-        ensure => ["installed"],
-        require => Exec['apt-update']    
-    }
-    
-}
-
-class web {
-
-    exec {
-      "django":
-      command => "/usr/bin/sudo pip install django",
-      require => Package["python-pip"],
-      onlyif => "pip freeze | grep django == ''",
-    }
-    
-    #web server
-    exec {
-      "gunicorn":
-      command => "/usr/bin/sudo pip install gunicorn",
-      require => Package["python-pip"],
-      onlyif => "pip freeze | grep unicorn == ''",
-    }
-    
-    # static file handler
-    exec {
-      "whitenoise":
-      command => "/usr/bin/sudo pip install whitenoise",
-      require => Package["python-pip"],
-      onlyif => "pip freeze | grep whitenoise == ''",
-    }
-    
-    exec {
-        "heroku-toolbelt":
-        command => "wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh",
-        creates => "/usr/local/heroku",
-        require =>Package["wget"],  
     }
 }
 
@@ -85,8 +43,30 @@ class mysql {
   }
 }
 
+class application {
+	exec {
+		"create-database":
+		command => 'echo "create database gitstats" | mysql -uroot',
+		require => Service["mysql"],
+		unless => 'echo "show databases" | mysql -uroot | grep -c gitstats',
+	  }
+	
+	exec {
+		"makemigrations":
+		command => 'python /app/manage.py makemigrations',
+		require => Exec['create-database'],
+		creates => '/app/migrations',
+	}
+	
+	exec {
+		"migrate":
+		command => 'python /app/manage.py migrate',
+		subscribe => Exec['makemigrations'],
+		refreshonly => true,
+	}
+}
+
 include core
 include python
-include networking
-include web
 include mysql
+include application
