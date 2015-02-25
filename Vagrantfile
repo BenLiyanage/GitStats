@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
   #config.vm.network :forwarded_port, guest: 8000, host: 8000
 
   #shared
-  config.vm.synced_folder "./projects", "/projects"
+  config.vm.synced_folder "./", "/app"
 
   #virtualbox
   if defined? VagrantVbguest
