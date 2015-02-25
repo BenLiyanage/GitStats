@@ -31,7 +31,7 @@ class python {
 	exec {
 		"python-pip":
 		command => "easy_install -U pip",
-		creates => "/vagrant/lib/python2.7/site-packages/pip",
+		onlyif => "bash -c 'which pip > /dev/null && exit 1 || exit 0'",
 		require => Package["python"]
 	}
 }

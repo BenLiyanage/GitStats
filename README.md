@@ -1,8 +1,8 @@
 # Overview
 
-When choosing between different technical solutions in the open source world having a vibrant community backing the project can make the difference between a ful rewrite of your application, and a simple upgrade when maintaining your own systems.
+When choosing between different technical solutions in the open source world having a vibrant community backing the project can make the difference between a full rewrite of your application, and a simple upgrade when maintaining your own systems.
 
-This application allows you to compare stats about different publically available github repositories.  Currently it is only comparing pull request rate.  Having current pull requests is an indicator that a repository is actively being maintained. Additional stats will be added at a later time like ticket reclosure rate, and number of contributors.
+This application allows you to compare stats about different publicly available github repositories.  Currently it is only comparing pull request rate.  Having current pull requests is an indicator that a repository is actively being maintained.
 
 ## Technologies Used
 
@@ -30,8 +30,6 @@ This is a full stack solution.  Technologies I have used in this project are:
     * ->Fill out Information
     * Put ClientID and Client Secret into __init__.py created in step 1
 * Run the vagrant file.  This will assemble an appropriate box for you.
-* python manage.py makemigrations
-* python manage.py migrate
 
 How to run:
 python manage.py runserver 0.0.0.0:8000 
@@ -45,8 +43,11 @@ At the moment this application requires mysql--there are some mysql specific que
 # TODO
 * Add Pagination Processing for the pull requests.  Currently it only imports the last 30 pull requests that have been closed.
 * Parse out Month/Date from pull_request dates on cache so that the application can be database agnostic.
-* Automate Database setup
-* Log crawling to database for Repo Processing to allow for rendering statistical success rates.
+* Render statistical success rates for Repo Processing.
 * Mobile testing.
 * Throw in a D3.js example.
 * set up web test runner for python: http://tungwaiyip.info/software/HTMLTestRunner.html
+* Set up a cron job for scraping.
+* Additional Metrics
+    * Ticket Re-closure Rate
+	* Number of Contributors
