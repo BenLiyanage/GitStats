@@ -82,6 +82,18 @@ class application {
 	}
 }
 
+include supervisor
+
+supervisor::service {
+  'webserver':
+    ensure      => present,
+    command     => 'python /app/manage.py runserver 0.0.0.0:8000',
+	directory => '/app/',
+    user        => 'vagrant',
+    group       => 'vagrant',
+    require     => [ exec['migrate'] ];
+}
+
 include core
 include python
 include mysql

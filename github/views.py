@@ -40,7 +40,7 @@ def Jasmine(request):
 
 def About(request):
     template = loader.get_template('github/about.html')
-    with open ('readme.md', 'r') as myFile:
+    with open ('README.md', 'r') as myFile:
         content = myFile.read()
     content = markdown(content)
     context = RequestContext(request, { 'content': content })
