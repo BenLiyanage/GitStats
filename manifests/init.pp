@@ -23,10 +23,17 @@ class core {
 class python {
 
     package { 
-      [ "python", "python-setuptools", "python-dev", "python-pip", ]:
+      [ "python", "python-setuptools", "python-dev", ]:
         ensure => ["installed"],
         require => Exec['apt-update']    
     }
+	
+	exec {
+		"python-pip":
+		command => "easy_install -U pip",
+		creates => "/vagrant/lib/python2.7/site-packages/pip",
+		require => Package["python"]
+	}
 }
 
 class mysql {
@@ -50,11 +57,20 @@ class application {
 		require => Service["mysql"],
 		unless => 'echo "show databases" | mysql -uroot | grep -c gitstats',
 	  }
+	  
+	exec {
+		"install-pip-requirements":
+		command => "/usr/bin/sudo pip install -r /app/requirements.txt",
+		require => Exec["python-pip"],
+	}
 	
 	exec {
 		"makemigrations":
 		command => 'python /app/manage.py makemigrations',
-		require => Exec['create-database'],
+		require => [
+						Exec['create-database'],
+						Exec['install-pip-requirements'],
+					],
 		creates => '/app/migrations',
 	}
 	

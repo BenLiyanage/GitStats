@@ -23,17 +23,15 @@ This is a full stack solution.  Technologies I have used in this project are:
 # Installation
 
 * Pull down this repository.  
-* Run the vagrant file.  This will assemble an appropriate box for you.
-* mkdir /projects/populargithub/logfile
-* pip install requirements.txt
-* python manage.py makemigrations
-* python manage.py migrate
-* cp /projects/populargithub/settings/__init__.py--template /projects/populargithub/settings/__init__.py
-* set up github api secrets
+* Setup Github API
+    * cp /projects/populargithub/settings/__init__.py--template /projects/populargithub/settings/__init__.py
     * log into github -> https://github.com/settings/applications
     * ->Register New Application
     * ->Fill out Information
-    * Put ClientID and Client Secret into __init__.py
+    * Put ClientID and Client Secret into __init__.py created in step 1
+* Run the vagrant file.  This will assemble an appropriate box for you.
+* python manage.py makemigrations
+* python manage.py migrate
 
 How to run:
 python manage.py runserver 0.0.0.0:8000 
