@@ -8,3 +8,4 @@ build
 *.log
 migrations
 logfile
+popularGithub/settings/__init__.py
