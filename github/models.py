@@ -47,6 +47,13 @@ class PullRequest(models.Model):
     closed_at = models.DateTimeField(null=True)
     merged_at = models.DateTimeField(null=True)
 
+
+    @staticmethod
+    def getDistinctUserIds(repo_id):
+        prs = PullRequest.objects.filter(repo=repo_id)
+        return [str(pr.user.id) for pr in prs]
+
+
 # TODO: Issue Stats.  Skipping this to keep scope simpler.
 # class Issue(models.Model):
     # repo = models.ForeignKey(Repo)
