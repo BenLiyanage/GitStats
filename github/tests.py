@@ -28,7 +28,7 @@ class TestProccessing(TestCase):
         #repo request shouldn't be processed, since its cached
         ProcessRepo(testRepoFullName)
 
-    def test_PrcoessRepoLargePullRequestCount(self):
+    def test_ProcessRepoLargePullRequestCount(self):
         testRepo = 3638964
         testRepoFullName = 'ansible/ansible'
 

@@ -126,7 +126,7 @@ def RefreshRateLimitStats():
     rateInfo = MakeGitHubRequest('rate_limit')
 
     for resource in rateInfo['resources'].keys():
-        resource =str(resource)
+        resource = str(resource)
         UpdateRateLimit(resource, rateInfo['resources'][resource]['limit'], rateInfo['resources'][resource]['remaining'], rateInfo['resources'][resource]['reset'])
 
 def RateLimitRemaining(queryType):
@@ -142,7 +142,7 @@ def UpdateRateLimit(queryType, limit, remaining, reset):
     try:
         myRateLimit = RateLimit.objects.get(pk = queryType)
     except ObjectDoesNotExist:
-        myRateLimit = RateLimit(type = queryType)
+        myRateLimit = RateLimit(queryType = queryType)
 
     myRateLimit.limit = limit
     myRateLimit.remaining = remaining
@@ -175,7 +175,7 @@ def ProcessGitHubRequest(numberToProcess=10):
 
     for myRequestCache in myRequestCaches:
         queryParameters = myRequestCache.query.split('/')
-        queryType = queryParameters [0]
+        queryType = queryParameters[0]
         log.info("found a request")
         if queryType == 'repos':
             log.info("processing a repo")
