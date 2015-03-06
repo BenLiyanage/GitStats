@@ -125,24 +125,24 @@ def ProcessPulLRequests(remotePullRequestURL, myRepo):
 def RefreshRateLimitStats():
     rateInfo = MakeGitHubRequest('rate_limit')
 
-    for myType in rateInfo['resources'].keys():
-        type =str(myType)
-        UpdateRateLimit(type, rateInfo['resources'][type]['limit'], rateInfo['resources'][type]['remaining'], rateInfo['resources'][type]['reset'])
+    for resource in rateInfo['resources'].keys():
+        resource =str(resource)
+        UpdateRateLimit(resource, rateInfo['resources'][resource]['limit'], rateInfo['resources'][resource]['remaining'], rateInfo['resources'][resource]['reset'])
 
-def RateLimitRemaining(type):
+def RateLimitRemaining(queryType):
     try:
-        myRateLimit = RateLimit.objects.get(pk = type)
+        myRateLimit = RateLimit.objects.get(pk = queryType)
     except ObjectDoesNotExist:
         raise Exception("Missing Rate Limit Data, have things been initialized correctly?")
 
     return myRateLimit.remaining
 
 
-def UpdateRateLimit(type, limit, remaining, reset):
+def UpdateRateLimit(queryType, limit, remaining, reset):
     try:
-        myRateLimit = RateLimit.objects.get(pk = type)
+        myRateLimit = RateLimit.objects.get(pk = queryType)
     except ObjectDoesNotExist:
-        myRateLimit = RateLimit(type = type)
+        myRateLimit = RateLimit(type = queryType)
 
     myRateLimit.limit = limit
     myRateLimit.remaining = remaining
@@ -244,11 +244,11 @@ def MakeGitHubRequest(url):
         myRequestCache.save()
 
     #record rate limiting for status page
-    type="core"
+    queryType="core"
     if url.startswith("search"):
-        type="search"
+        queryType="search"
 
-    UpdateRateLimit(type, r.headers['X-RateLimit-Limit'], r.headers['X-RateLimit-Remaining'], r.headers['X-RateLimit-Reset'])
+    UpdateRateLimit(queryType, r.headers['X-RateLimit-Limit'], r.headers['X-RateLimit-Remaining'], r.headers['X-RateLimit-Reset'])
 
     # check for pagination.  If there is a paginated request, queue it.
     if 'Link' in r.headers:
