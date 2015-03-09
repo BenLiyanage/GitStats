@@ -10,7 +10,7 @@ class GitHubRequestCache(models.Model):
 
 
 class RateLimit(models.Model):
-    type = models.CharField(max_length=255, primary_key=True)
+    queryType = models.CharField(max_length=255, primary_key=True)
     limit = models.IntegerField()
     remaining = models.IntegerField()
     reset = models.DateTimeField()
