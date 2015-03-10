@@ -22,21 +22,22 @@ This is a full stack solution.  Technologies I have used in this project are:
 
 # Installation
 
-* Pull down this repository.  
+* Pull down this repository.
+* Run the vagrant file: `vagrant up`.  This will assemble an appropriate box for you.
+* SSH into the vagrant box: `vagrant ssh`
 * Setup Github API
-    * cp /projects/populargithub/settings/__init__.py--template /projects/populargithub/settings/__init__.py
+    *  cp vagrant/populargithub/settings/__init__.py--template /vagrant/populargithub/settings/__init__.py
     * log into github -> https://github.com/settings/applications
     * ->Register New Application
     * ->Fill out Information
     * Put ClientID and Client Secret into __init__.py created in step 1
-* Run the vagrant file.  This will assemble an appropriate box for you.
 * Web site should be running on 192.168.33.10:8000
     * Please note
 	    * It seems the home page is having some loading issues with this web server configuration.
 		* This web server configuration is not production grade.
 
 To Manually Run the Web Server:
-python manage.py runserver 0.0.0.0:8000 
+python manage.py runserver 0.0.0.0:8000
 
 
 ## Requirements
