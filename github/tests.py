@@ -4,9 +4,13 @@ from processing import ProcessRepo, GitHubRequestCache, QueueGitHubRequest, Proc
 from django.db.models.base import ObjectDoesNotExist
 import unittest
 from random import choice
+from django.core.management import call_command
+from django.utils.six import StringIO
+import mock
+import time
 # Create your tests here.
 
-class TestProccessing(TestCase):
+class TestProcessing(TestCase):
     def test_ProcessRepo(self):
         testRepo = 18295962
         testRepoFullName = 'BenLiyanage/vagrant-python'
@@ -28,6 +32,21 @@ class TestProccessing(TestCase):
         #repo request shouldn't be processed, since its cached
         ProcessRepo(testRepoFullName)
 
+    # TODO: This is not quite working
+    def fakeProcessGitHubRequest(numberToProcess):
+        time.sleep(1)
+        return
+            
+    @mock.patch("github.processing.ProcessGitHubRequest", fakeProcessGitHubRequest)
+    # crazy thought: @mock.patch("datetime.datetime.now", fakeNow)
+    def test_process_queue_command(self):
+        # TODO: This is not quite working.
+        with mock.patch('github.models.GitHubRequestCache') as mockModel:
+            mockModel.objects.filter().order_by().count.return_value = 1
+            out = StringIO()
+            call_command('process_queue', '2', stdout=out)
+            self.assertIn('Processed 2 requests.', out.getvalue())
+        
     def test_PrcoessRepoLargePullRequestCount(self):
         testRepo = 3638964
         testRepoFullName = 'ansible/ansible'
