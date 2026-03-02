@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^comparedata$', views.CompareData),
     url(r'^queuemonitordata$', views.QueueMonitorData),
     url(r'^jasmine$', views.Jasmine, name='jasmine'),
+    url(r'^getusersdata$', views.getUsersData, name='getusersdata'),
 )

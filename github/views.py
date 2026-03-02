@@ -48,9 +48,9 @@ def About(request):
 
 def QueueMonitorData(request):
     queueMonitorData = GitHubRequestCache.objects.values('success').annotate(Count('query'))
-    
+
     myJson = {'unproccessed':0, 'successful':0, 'failed': 0}
-    
+
     for queueData in queueMonitorData:
         if queueData['success'] == None:
             myJson['unproccessed'] = queueData['query__count']
@@ -58,9 +58,9 @@ def QueueMonitorData(request):
             myJson['successful'] = queueData['query__count']
         elif queueData['success'] == False:
             myJson['failed'] = queueData['query__count']
-            
+
     return HttpResponse(json.dumps(myJson))
-    
+
 def CompareData(request):
     #Initialize our JSON Object
     myJson = {'cols': [{'label':'Month','type':'string'}], 'rows':[]}
@@ -163,6 +163,17 @@ def CompareData(request):
     myJson['rows'].append(myRow)
 
     return HttpResponse(json.dumps(myJson))
+
+def getUsersData(request):
+    res = []
+    repos = Repo.objects.all()
+    for repo in repos:
+        res.append({
+            "name": repo.full_name,
+            "contributors": len(PullRequest.getDistinctUserIds(repo.id))
+            })
+    return HttpResponse(json.dumps(res))
+
 
 def GetStats(request):
     fullName = request.GET.get('full_name')
