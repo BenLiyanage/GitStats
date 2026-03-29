@@ -1,4 +1,4 @@
-Django==1.7.1
+Django==2.2.24
 gunicorn==19.1.1
 pytz==2011k
 requests==2.5.0
